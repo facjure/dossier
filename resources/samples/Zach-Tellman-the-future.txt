@@ -1,0 +1,57 @@
+---
+author: Zach Tellman
+gender: male
+title: The future is when we think of the past
+curator: Priyatam
+year: 8 April 2012
+country: America
+tags:
+ -  clojure
+ -  writers
+ -  sci-fi
+ -  essays
+ -  singularity
+ -  meditative
+ -  photography
+---
+
+A photograph is just a collection of transitory details. It captures the precise angle of an arm,
+ the precise length of a shadow, the precise shape of someone's mouth when captured mid-word.
+
+But looking at an old photograph of ourselves, none of this holds our attention. Instead we remember who was there, what was said, how we felt, who we were in that moment. The details are just a foundation, something upon which we can rebuild our memories.
+
+This isn’t only true of photos of ourselves, or of people we know. Even looking through a photo album of strangers, we’re compelled to build up people from nothing, guess at what sort of person they were from their posture, their expression, what they’re wearing. This is a deeply human thing to do; in The Man Who Mistook His Wife for a Hat, Oliver Sacks describes “Mr Thompson”, who can remember no one and therefore invents rich histories for everyone he meets.
+
+We do this because we’re not very good with details. We can study the outline of a single leaf on a tree, or the curve of a single branch, but as we pull back all the individual details congeal into a single object: a tree. Later, we can try to fill in all the details, but like Mr Thompson we are only pretending to remember, creating a plausible foundation of details for our memory of an abstract concept.
+
+This phenomenon isn’t limited to physical objects. In Tlön, Uqbar, Orbis Tertius, Jorge Luis Borges describes a fictional world which “[judges] that metaphysics is a branch of fantastic literature. They know that a system is nothing more than the subordination of all aspects of the universe to any one such aspect.” Our understanding of the world around us is much the same; we work backwards from our current beliefs, and therefore tend to only remember things which agree with them. If our beliefs are self-consistent, it’s probably only because we’ve willfully ignored everything to the contrary.
+
+Photographs, videos, and written accounts enhance our ability to recall transitory details, and therefore our ability synthesize new beliefs. Without them, we’d be at the mercy of our own faulty, opinionated memories.
+
+But what works for a single photograph, or even an album, won’t work for an entire archive. Even if we’re deliberate about it, examining the photographs one at a time, each new collection of details makes us less able to remember what came before. We can’t possibly remember all the similarities and differences between each photograph, any more than we can remember the distances between all the leaves on a tree.
+
+So what do we do? We create an index.
+
+An index allows us to only focus on details we care about, and safely ignore the rest. But like any abstraction, an index focuses on only a single aspect of the information, raising it above all the others. We can work around this by creating multiple indices into the same data (even elementary school card catalogues let you look up books by title or author), but no matter how many ways we cross-index our data we’re constrained by a simple fact: we can only create indices for data which is either ordered or finite.
+
+Consider the case of a book with an entirely unique title and an entirely unique subject matter. The title doesn’t give us any trouble; alphabetic ordering allows us to place any new title between two that already exist. The subject, though, presents a real problem. We can’t say which subject goes before the other, so the only solution is to enumerate all possible subjects. When our unique book is published, someone must make the entirely subjective decision of whether to shoehorn it into an existing category or invent a new one.
+
+Despite all this, indices are a necessary tool. They collapse the world down to just a single facet, allowing us to cope with the sheer volume of information that surrounds us. A good index gives us an understanding of the world around us without forcing us to exhaustively search it.
+
+But where an index reveals, it can also obscure. To give a restaurant a rating from one to five stars, we must collapse all sorts of considerations – the food, the service, the ambience, our mood that day – down to a single value. This value isn’t a distillation of our experience, it’s an oversimplification that lacks any context or explanation. Its only virtue is that it can be ordered with respect other people’s values, and that these collective values can be reduced to a single, average value. We can give explanations, describing in detail the runny eggs or hour-long wait for a table, but our explanations cannot be ordered or combined. At best they can sit beside the index, there for anyone curious to know exactly why we gave three stars to the diner down the street.
+
+It’s also important to remember that while indices are abstractions, not all abstractions are indices. The cosmogonies of the pre-Socratic philosophers were detailed and often beautiful; Anaximander believed that the universe was once an infinite, homogeneous collection of ur-matter he called apeiron. He wrote that we came into being when the apeiron split into discrete pieces, and that our world – filled with divisions between hot and cold, solid and intangible – was both greater and less than what had birthed it. This is aesthetically compelling, but doesn’t tell us anything about the world around us. Indices are an aspect of the world we exist in, which can shape our perceptions and actions. Anaximander’s cosmogony is just an idea.
+
+Of course, that doesn’t prevent us from treating it as more than it is; all abstractions can be projected onto the real world in some way or another. But where indices are built upon details, data that we can examine and compare to the beliefs built atop it, abstractions can only be self-consistent. Abstractions defy introspection; we can try to delve into the underlying assumptions, but there will always be a lower threshold we cannot pass, smooth and impermeable.
+
+An index is a tool, a construct that we can build up and tear down as our understanding of the world changes. A self-consistent abstraction is an oracle, a source of answers which we must accept at face value or not at all.
+
+And yet, there seems to be a lot of money in building oracles. Google doesn’t justify its search results, it just presents them simply and quickly. Apple seals off the innards of its products, assuring us that everything hidden away “just works”. This probably stems from the ever-increasing glut of information and complexity; we feel like we’re skimming along a vast ocean, held up only by surface tension and our own incuriosity. Press too hard, and we drown.
+
+The Singularity, that old standby of the armchair geek eschatologist, is the reductio ad absurdum of this trend, where progress itself becomes oracular. This hardly seems like something to look forward to.
+
+I have nothing against Google or Apple (some of my favorite products are oracles), but at the same time I can’t shake the feeling that we haven’t realized the dreams of Engelbart or Licklider. We don’t use technology as an extension of the human intellect, only as a shelf upon which it can rest.
+
+This distinction will become more pressing with time. Plenoptic cameras are only the beginning, soon we’ll be able to pick apart the layers of any scene we record, hear each conversation in isolation, see what was right in front of us and what was far off in the distance. Every second we record will give us minutes of experiences to relive, and recording devices will continue to grow more ubiquitous and effortless to use. As the volume of our experiences grows, our ability to process it, to synthesize beliefs from it, will strain against its limits.
+
+In one outcome, our experiences will be packaged for us, presented as hermetically sealed truths. I hope for a different path, where technology gives us the tools to intuit the tension between experience and belief, to understand the utility and shortcomings of seeing only a facet of the world. If we can build up and tear down beliefs with ease then they become, as in Borges' story, just another form of literature. With the proper application of technology, belief can become an artform.
