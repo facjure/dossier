@@ -1,11 +1,11 @@
-Clover
+Dossier
 ======
 
 A document management library in Clojure, built on S3 and Elasticsearch.
 
 ## Overview
 
-Clover is a higher-level api to store, search, and analyze plaintext-like documents on [Elastisch](http://clojureelasticsearch.info) with [S3](https://github.com/weavejester/clj-aws-s3). Built primarily to analyze structured content like tech blogs, poems, and stories.  Integration with twitter [streams](https://github.com/adamwynne/twitter-api) and text analysis is currently in progress.
+Dossier is a higher-level api to store, search, and analyze plaintext-like documents on [Elastisch](http://clojureelasticsearch.info) with [S3](https://github.com/weavejester/clj-aws-s3). Built primarily to analyze structured content like tech blogs, poems, and stories.
 
 For more info, see Status & Roadmap.
 
@@ -84,7 +84,7 @@ This library stands on the giant shoulders of [Elastisch](http://clojureelastics
 
 **early development**.
 
-This library was broken apart from Poetroid, and currently works (almost) for basic search, backup, and other simple things. Roadmap includes:
+This library was broken apart from an internal webapp (Poetroid), and currently works (almost) for basic search, backup, and other simple things. The roadmap includes:
 
 - [Aggregation](http://www.elasticsearch.org/guide/en/elasticsearch/guide/current/_buckets.html) for 'Collections'
 - ‘Related documents’ based on existing metadata
