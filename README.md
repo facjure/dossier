@@ -16,19 +16,21 @@ Currently, there are two apis:
 1. Publish
 
 ```clojure
-(require '[clover.api :refer :all]))
-(publish :resource "samples/Chris-Granger-IDE-as-value.md")
+(require ‘[dossier.api :refer :all]))
+(publish :resource "samples/Hemingway-The-old-man-and-the-bridge.md")
 >> http://yourdomain.com/zaswqr7
 ```
 
-This will upload a document to S3, index content and its metadata in ES, and generate a short url.
+This will upload a document to S3, index content and its metadata in ES, and generate a short url. Publish can take :file :url :str or any :resource from classpath.
 
 2. Search
 
+Search currently uses ‘fuzzy’ search, exact match, and others options.
+
 ```clojure
-(require '[clover.api :refer :all]))
-(search :title "IDE as VALUE" 0 :match)
-(search :content "After week physical" 5 :google)
+(require ‘[dossier.api :refer :all]))
+(search :title "The-old-man-and-the-bridge" 0 :match)
+(search :content "bridge with soldiers" 5 :google)
 ```
 
 _Document formats supported_:
@@ -88,7 +90,7 @@ This library was broken apart from an internal webapp (Poetroid), and currently 
 
 - [Aggregation](http://www.elasticsearch.org/guide/en/elasticsearch/guide/current/_buckets.html) for 'Collections'
 - ‘Related documents’ based on existing metadata
-- Converters for Pdf and Html5
+- Text analysis, [looking at time](http://www.elasticsearch.org/guide/en/elasticsearch/guide/current/_looking_at_time.html)
 
 ## License
 
