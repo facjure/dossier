@@ -5,7 +5,7 @@ A document management library in Clojure, built on S3 and Elasticsearch.
 
 ## Overview
 
-Dossier is a higher-level api to store, search, and analyze plaintext-like documents on [Elastisch](http://clojureelasticsearch.info) with [S3](https://github.com/weavejester/clj-aws-s3). Built primarily to analyze structured content like tech blogs, poems, and stories.
+Dossier is a higher-level api to store, search, and analyze plaintext-like documents on [Elastisch](http://clojureelasticsearch.info). Built primarily to analyze structured content like tech blogs, poems, and stories.
 
 For more info, see Status & Roadmap.
 
@@ -80,7 +80,7 @@ See `docs/guide.md` (work-in-progress) for a guide and an introduction to Elasti
 
 ## Credits
 
-This library stands on the giant shoulders of [Elastisch](http://clojureelasticsearch.info), thanks to the team at Clojurewerkz.
+This library stands on the shoulders of [Elastisch](http://clojureelasticsearch.info) and [Opennlp](https://github.com/dakrone/clojure-opennlp). Special thanks to the team at Clojurewerkz.
 
 ## Status & Roadmap
 
