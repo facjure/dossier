@@ -1,4 +1,4 @@
-(ns dossier.test.repl
+(ns dossier.repl-test
   (:require [clojure.java.io :as io]
             [dossier.utils :refer :all]
             [dossier.converter :as conv]

@@ -1,4 +1,4 @@
-(ns dossier.test.document
+(ns dossier.document-test
   (:refer-clojure :exclude [name parents])
   (:require [clojure.java.io :as io]
             [me.raynes.fs :refer [glob]]

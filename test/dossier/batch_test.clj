@@ -1,4 +1,4 @@
-(ns dossier.test.batch
+(ns dossier.batch-test
   (:require [clojure.test :refer :all]
             [dossier.utils :refer :all]
             [dossier.converter :refer :all]

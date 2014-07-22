@@ -1,4 +1,4 @@
-(ns dossier.test.api
+(ns dossier.api-test
   (:refer-clojure :exclude [name parents])
   (:require [clojure.java.io :as io]
             [clojure.test :refer :all]
