@@ -1,13 +1,19 @@
 Dossier
-======
+=======
 
-A document management library in Clojure, built on S3 and Elasticsearch.
+A simple document management library in Clojure, built on S3 and Elasticsearch.
 
 ## Overview
 
-Dossier is a higher-level api to store, search, and analyze plaintext-like documents on [Elastisch](http://clojureelasticsearch.info). Built primarily to analyze structured content like tech blogs, poems, and stories.
+Dossier is a higher-level api to store, search, and analyze plaintext-like documents on [Elastisch](http://clojureelasticsearch.info). Built primarily to manage structured content like blogs, poems, and stories.
 
 For more info, see Status & Roadmap.
+
+## Usage
+
+Leiningen dependency information:
+
+    [facjure/dossier "0.3.1"]
 
 ## API
 
@@ -16,7 +22,7 @@ Currently, there are two apis:
 1. Publish
 
 ```clojure
-(require ‘[dossier.api :refer :all]))
+(require '[dossier.api :refer :all]))
 (publish :resource "samples/Hemingway-The-old-man-and-the-bridge.md")
 >> http://yourdomain.com/zaswqr7
 ```
@@ -28,7 +34,7 @@ This will upload a document to S3, index content and its metadata in ES, and gen
 Search currently uses ‘fuzzy’ search, exact match, and others options.
 
 ```clojure
-(require ‘[dossier.api :refer :all]))
+(require '[dossier.api :refer :all]))
 (search :title "The-old-man-and-the-bridge" 0 :match)
 (search :content "bridge with soldiers" 5 :google)
 ```
@@ -36,43 +42,8 @@ Search currently uses ‘fuzzy’ search, exact match, and others options.
 _Document formats supported_:
 
 - Plaintext (UTF-8)
-- Markdown (+ github-flavored markdown)
-- [Zenup](https://github.com/facjure/zenup)
-
-## Usage
-
-**Setup**
-
-Environment variables are managed by [Environ](https://github.com/weavejester/environ). Add the following vars in `~/.lein/profiles.clj`.
-
-_AWS/S3 credentials_:
-
-    :aws-access-key
-    :aws-secret-key
-    :s3-bucket
-
-Your application domain (http://<mynew>.com), for generating unique document urls
-
-    :app-domain
-
-**Dev**
-
-Start Elasticsearch in the background.
-
-    elasticsearch
-
-Run ring in the background to auto-reload .clj classes.
-
-    lein deps (first time)
-    lein repl
-
-**Test**
-
-    lein test
-
-**Package**
-
-    lein uberjar
+- Markdown + github-flavored Markdown
+- [Zendown](https://github.com/facjure/zendown)
 
 ## Documentation
 
@@ -80,17 +51,17 @@ See `docs/guide.md` (work-in-progress) for a guide and an introduction to Elasti
 
 ## Credits
 
-This library stands on the shoulders of [Elastisch](http://clojureelasticsearch.info) and [Opennlp](https://github.com/dakrone/clojure-opennlp). Special thanks to the team at Clojurewerkz.
+This library stands on the shoulders of [Elastisch](http://clojureelasticsearch.info).
 
 ## Status & Roadmap
 
-**early development**.
+**Early development**.
 
 This library was broken apart from an internal webapp (Poetroid), and currently works (almost) for basic search, backup, and other simple things. The roadmap includes:
 
 - [Aggregation](http://www.elasticsearch.org/guide/en/elasticsearch/guide/current/_buckets.html) for 'Collections'
-- ‘Related documents’ based on existing metadata
-- Text analysis, [looking at time](http://www.elasticsearch.org/guide/en/elasticsearch/guide/current/_looking_at_time.html)
+- [Looking at time](http://www.elasticsearch.org/guide/en/elasticsearch/guide/current/_looking_at_time.html)
+- 'Related documents' based on existing metadata
 
 ## License
 
