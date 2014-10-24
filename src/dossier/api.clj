@@ -1,13 +1,12 @@
 (ns dossier.api
   (:require [dossier.batch :refer :all]
             [dossier.document :refer :all]
-            [dossier.converter :refer :all]
-            [dossier.social :refer :all]
+            [zendown.core :as zen]
             [dossier.utils :refer :all]))
 
 (defn publish [io-type fname]
   "Process a document, validate, backup in S3, index in ES, and generate a short url"
-  (let [doc (read-zenup io-type fname)
+  (let [doc (zen/readany io-type fname)
         uri (gen-short-url)]
     (upload uri io-type fname)
     (index doc uri)))

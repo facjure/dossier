@@ -3,7 +3,6 @@
   (:require [clojure.java.io :as io]
             [me.raynes.fs :refer [glob]]
             [clojure.test :refer :all]
-            [dossier.config :refer :all]
             [dossier.document :refer :all]))
 
 
@@ -25,7 +24,4 @@
   (testing "Google-like-query"
     (is (not (nil? (google-like-query :author "Sap" ))))
     (is (not (nil? (google-like-query :title "May AND Forget" :google))))))
-
-
-;(run-tests)
 

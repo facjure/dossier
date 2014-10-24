@@ -1,13 +1,22 @@
 (ns dossier.document
-  (:require [clojurewerkz.elastisch.rest :as esr]
+  (:require [environ.core :refer [env]]
+            [clojurewerkz.elastisch.rest :as esr]
             [clojurewerkz.elastisch.rest.index :as idx]
             [clojurewerkz.elastisch.rest.document :as esd]
             [clojurewerkz.elastisch.rest.response :as esrsp]
             [clojurewerkz.elastisch.query :as q]
             [me.raynes.fs :refer [glob]]
-            [dossier.config :refer :all]
-            [dossier.converter :as conv]
+            [zendown.core :as zen]
             [dossier.utils :refer :all]))
+
+
+;; Setup
+
+(def ^:dynamic *es* (:bonsai-url env))
+(def ^:dynamic *es-index* (:bonsai-url env))
+(def ^:dynamic *app-domain* (:app-domain env))
+
+;; Schema
 
 (def document-schema
   "A Schema to hold Documents"
@@ -33,6 +42,8 @@
    :intro     {:type "string" :store "yes" :analyzer "snowball"}
    :documents {:type "string" :store "yes"}})
 
+;; Api
+
 (defn setup [indx]
   "Setup Elastic Search with a defined schema."
   (esr/connect *es*)
@@ -50,7 +61,7 @@
   ([io-type file uri]
    "io-type - :resource :file :url
    file - file name"
-   (index (conv/read-zenup io-type file) uri)))
+   (index (zen/readany io-type file) uri)))
 
 ;; NOTE: May not work on Heroku with multiple dynos
 (defn index-all [collection]
@@ -94,8 +105,7 @@
    (esd/get *es-index* :docs id)))
 
 (defn cleanup
-  "****WARNING*****
-  Deletes Poetroid Index!"
+  "Deletes index!"
   ([] (cleanup *es*))
   ([url]
    (esr/connect url)

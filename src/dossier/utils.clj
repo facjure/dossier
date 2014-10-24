@@ -1,7 +1,6 @@
 (ns dossier.utils
   (:require [clojure.java.io :as io]
-            [clojure.string :as str]
-            [dossier.config :as conf])
+            [clojure.string :as str])
   (:import  [java.io File]))
 
 

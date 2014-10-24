@@ -1,7 +1,6 @@
 (ns dossier.repl-test
   (:require [clojure.java.io :as io]
             [dossier.utils :refer :all]
-            [dossier.converter :as conv]
             [dossier.document :as doc]
             [dossier.api :as api]))
 
@@ -10,7 +9,6 @@
 
 ;; Search
 
-;(conv/read-zenup :resource sample)
 ;(doc/cleanup)
 ;(doc/status)
 ;(doc/setup)

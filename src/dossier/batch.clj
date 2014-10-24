@@ -1,15 +1,25 @@
 (ns dossier.batch
   (:refer-clojure :exclude [name parents])
   (:use [clojure.string :only (join split)])
-  (:require [clojure.string :as str]
+  (:require [environ.core :refer [env]]
+            [clojure.string :as str]
             [clojure.java.io :as io]
             [me.raynes.fs :refer [glob]]
             [aws.sdk.s3 :as s3]
-            [dossier.config :refer :all]
             [dossier.utils :refer :all])
   (:import  [java.io File]))
 
-;; FILES
+
+;; Setup
+
+(def ^:dynamic *aws*
+  {:access-key (env :aws-access-key)
+   :secret-key (env :aws-secret-key)})
+
+(def ^:dynamic *bucket* (env :s3-bucket))
+
+
+;; Utils
 
 (defn ls [dir]
   "List files in dir"
@@ -27,7 +37,7 @@
         :encoding "UTF-8"
         :append true))
 
-;; S3
+;; Api
 
 (defn upload
   "Upload content to S3"

@@ -26,6 +26,3 @@
   (testing "Auto complete queries"
     (is (not (nil? (search :author "Sap" ))))
     (is (not (nil? (search :title "May AND Forget" :google))))))
-
-
-;(run-tests)
