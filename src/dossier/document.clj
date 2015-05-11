@@ -9,14 +9,9 @@
             [zendown.core :as zen]
             [dossier.utils :refer :all]))
 
-
-;; Setup
-
-(def ^:dynamic *es* (:bonsai-url env))
-(def ^:dynamic *es-index* (:bonsai-url env))
+(def ^:dynamic *es* (or (:elasticsearch-url env) "http://127.0.0.1:9200"))
+(def ^:dynamic *es-index* (:elasticsearch-url env))
 (def ^:dynamic *app-domain* (:app-domain env))
-
-;; Schema
 
 (def document-schema
   "A Schema to hold Documents"
@@ -41,8 +36,6 @@
    :tags      {:type "string" :index_name "tag"}
    :intro     {:type "string" :store "yes" :analyzer "snowball"}
    :documents {:type "string" :store "yes"}})
-
-;; Api
 
 (defn setup [indx]
   "Setup Elastic Search with a defined schema."

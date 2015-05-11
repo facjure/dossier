@@ -7,6 +7,7 @@
 (deftest test-batch
   (def sample "samples/Hemingway-The-old-man-and-the-bridge.txt")
   (testing "batch"
-    (let [uri (generate-uri (zen/readany sample))
-          data (upload "samples/Hemingway-The-old-man-and-the-bridge.txt" uri)]
-      (is (contains? (download uri) :title)))))
+    (let [bucket "dossier-test"
+          uri (generate-uri (zen/readany :resource sample))
+          data (upload bucket "samples/Hemingway-The-old-man-and-the-bridge.txt" uri)]
+      (is (contains? (download bucket uri) :title)))))

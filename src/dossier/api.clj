@@ -4,11 +4,11 @@
             [zendown.core :as zen]
             [dossier.utils :refer :all]))
 
-(defn publish [io-type fname]
+(defn publish [bucket io-type fname]
   "Process a document, validate, backup in S3, index in ES, and generate a short url"
   (let [doc (zen/readany io-type fname)
         uri (gen-short-url)]
-    (upload uri io-type fname)
+    (upload bucket uri io-type fname)
     (index doc uri)))
 
 (defn search

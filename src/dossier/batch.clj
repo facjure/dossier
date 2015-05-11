@@ -9,17 +9,9 @@
             [dossier.utils :refer :all])
   (:import  [java.io File]))
 
-
-;; Setup
-
 (def ^:dynamic *aws*
   {:access-key (env :aws-access-key)
    :secret-key (env :aws-secret-key)})
-
-(def ^:dynamic *bucket* (env :s3-bucket))
-
-
-;; Utils
 
 (defn ls [dir]
   "List files in dir"
@@ -37,26 +29,23 @@
         :encoding "UTF-8"
         :append true))
 
-;; Api
-
-(defn upload
+(defn upload [bucket url fname]
   "Upload content to S3"
-  [url fname]
-  (s3/put-object *aws* *bucket* url (fetch :url fname)))
+  (s3/put-object *aws* bucket url (fetch :url fname)))
 
-(defn grant-read-access [url]
+(defn grant-read-access [bucket url]
   "Grant all users a read permission"
-  (s3/update-object-acl *aws* *bucket* url (s3/grant :all-users :read)))
+  (s3/update-object-acl *aws* bucket url (s3/grant :all-users :read)))
 
-(defn exists? [url]
+(defn exists? [bucket url]
   "Does content exist?"
-  (s3/object-exists? *aws* *bucket* url))
+  (s3/object-exists? *aws* bucket url))
 
-(defn download [url-suffix]
+(defn download [bucket url-suffix]
   "Download content from S3 and return a string;
    url-suffix: unique suffix added to the S3 host URL"
-    (slurp (:content (s3/get-object *aws* *bucket* url-suffix))))
+  (slurp (:content (s3/get-object *aws* bucket url-suffix))))
 
 (defn delete
-  [url fname]
-  (s3/delete-object *aws* *bucket* url))
+  [bucket url fname]
+  (s3/delete-object *aws* bucket url))
