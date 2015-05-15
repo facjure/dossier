@@ -1,24 +1,24 @@
 (ns dossier.document
   (:require [environ.core :refer [env]]
             [clojurewerkz.elastisch.rest :as esr]
-            [clojurewerkz.elastisch.rest.index :as idx]
+            [clojurewerkz.elastisch.rest.index :as esi]
             [clojurewerkz.elastisch.rest.document :as esd]
             [clojurewerkz.elastisch.rest.response :as esrsp]
             [clojurewerkz.elastisch.query :as q]
-            [me.raynes.fs :refer [glob]]
+            [clj-http.conn-mgr :as conn-mgr]
             [zendown.core :as zen]
             [dossier.utils :refer :all]))
 
-(def ^:dynamic *es* (or (:elasticsearch-url env) "http://127.0.0.1:9200"))
-(def ^:dynamic *es-index* (:elasticsearch-url env))
-(def ^:dynamic *app-domain* (:app-domain env))
+(defn connect [url]
+  "Connects to ES using a Persistent Connection. Returns a map of conn and index.
+   https://github.com/dakrone/clj-http#using-persistent-connections"
+  (esr/connect url {:connection-manager
+                    (conn-mgr/make-reusable-conn-manager {:timeout 10})}))
 
 (def document-schema
   "A Schema to hold Documents"
-  {
-   :url       {:type "string" :store "no" :index "not_analyzed"}
+  {:date      {:type "string" :store "yes" :index "not_analyzed"}
    :title     {:type "string" :store "yes" :analyzer "snowball"}
-   :date      {:type "string" :store "yes" :index "not_analyzed"}
    :author    {:type "string" :store "yes" :analyzer "snowball"}
    :bio       {:type "string" :store "yes" :analyzer "snowball"}
    :gender    {:type "string" :store "yes" :index "not_analyzed"}
@@ -27,79 +27,76 @@
    :content   {:type "string" :store "yes" :analyzer "snowball"}})
 
 (def collections-schema
-  "A schema to hold Collections"
-  {
-   :url       {:type "string" :store "no" :index "not_analyzed"}
-   :name      {:type "string" :store "yes" :analyzer "snowball"}
+  "A schema to hold Collections of Document References"
+  {:name      {:type "string" :store "yes" :analyzer "snowball"}
    :author    {:type "string" :store "yes" :analyzer "snowball"}
    :date      {:type "string" :store "yes" :index "not_analyzed"}
    :tags      {:type "string" :index_name "tag"}
    :intro     {:type "string" :store "yes" :analyzer "snowball"}
    :documents {:type "string" :store "yes"}})
 
-(defn setup [indx]
-  "Setup Elastic Search with a defined schema."
-  (esr/connect *es*)
-  (let [documents {:docs {:properties document-schema}}
-        collections {:docs {:properties collections-schema}}]
-    (idx/create indx :mappings documents)
-    (idx/create indx :mappings collections)))
+(defn create-index! [conn indx type schema]
+  "Create schema from props. Add a unique short-url as external id."
+  (let [schema' (merge schema
+                       {:url {:type "string" :store "no" :index "not_analyzed"}})
+        schema' {type {:properties schema}}]
+    (esi/create conn indx :mappings schema')))
 
-(defn index
-  "Index a document in Elasticsearch."
-  ([doc uri]
-   "doc - processed document in clj data structure"
-   (let [doc-data (merge doc {:uri uri})]
-     (esd/create *es-index* :docs doc-data)))
-  ([io-type file uri]
-   "io-type - :resource :file :url
-   file - file name"
-   (index (zen/readany io-type file) uri)))
+(defn index-document
+  "Index a document with the given schema. Returns a unique URL."
+  ([conn indx sch data]
+   "Accept document in clj data structure"
+   (let [url (gen-short-url)
+         doc-data (merge data {:uri url})]
+     (esd/create conn indx sch doc-data)
+     url))
+  ([conn indx sch file io-type]
+   "Accept document as a raw file from io-types :resource :file :url"
+   (index-document conn indx sch (zen/readany io-type file))))
 
-;; NOTE: May not work on Heroku with multiple dynos
-(defn index-all [collection]
-  "Index all local files based on local folder"
-  (let [cwd (. (java.io.File. ".") getCanonicalPath)
-        coll-path (str cwd "/resources/" collection)
-        _ (println coll-path)]
-    (doseq [f (glob coll-path)]
-      (index :file f (gen-short-url)))
-    :success))
-
-(defn google-like-query [^{:kind keyword} attr query size]
-  "Search with Google like queries."
+(defn fuzzy-query [conn indx sch ^{:kind keyword} attr query size]
+  "Search docs with Fuzzy queries."
   (let [query {:query_string {:query (str query "*")
                               :analyzer "snowball"
                               :allow_leading_wildcard false
                               :default_field (name attr)
                               :default_operator "OR"}}]
     (if (= attr :author)
-      (esd/search *es-index* :docs :size size :query query :facets { :author {:terms {:field "author"}}})
-      (esd/search *es-index* :docs :size size :query query))))
+      (esd/search conn indx sch :size size :query query :facets {:author {:terms {:field "author"}}})
+      (esd/search conn indx sch :size size :query query))))
 
-(defn match-query [^{:kind keyword} attr query _]
-  "Exact match."
+(defn match-query [conn indx sch ^{:kind keyword} attr query & size]
+  "Search docs with exact match."
   (let [query {:match {attr query}}]
-    (esd/search *es-index* :docs :query query)))
+    (esd/search conn indx sch :query query)))
 
-(defn status []
-  "Status of Index
-  Returns :running :not-running :index-not-setup"
-  (let [status (idx/stats *es-index*)
-        resp   (cond
-                (= (:status status) 404) :index-not-setup
-                (contains? status :_shards) :running
-                :else :not-running)]
+(defn search
+  "Convenient wrapper for search queries. Accepts meta data or fuzzy :google
+  like search. attr and value map to the document's schema. Optionally attr can
+  be a vector. query-type can be :google or :match"
+  ([conn indx sch attr query]
+   (search conn indx sch attr query 100 :fuzzy))
+  ([conn indx sch attr query size]
+   (search conn indx sch attr query size :fuzzy))
+  ([conn indx sch attr query size query-type]
+   (let [queryfn (cond (= query-type :fuzzy) fuzzy-query
+                       (= query-type :match) match-query)
+         res (queryfn conn indx sch attr query size)
+         total (:total (:hits res))]
+     (if (:facets res)
+       (get-in res [:facets attr :terms])
+       (map #(:_source %) (:hits (:hits res)))))))
+
+(defn status [conn indx]
+  "Status of Index. Returns :running :not-running :index-not-setup"
+  (let [stats (esi/stats conn indx)
+        resp (cond
+               (= (:status stats) 404) :index-not-setup
+               (contains? stats :_shards) :running
+               :else :not-running)]
     resp))
 
-(defn find-by-id [id]
-  "Return content by id"
+(defn find-by-url [conn indx sch url]
+  "Return content by document url"
   (:_source
-   (esd/get *es-index* :docs id)))
-
-(defn cleanup
-  "Deletes index!"
-  ([] (cleanup *es*))
-  ([url]
-   (esr/connect url)
-   (idx/delete *es-index*)))
+   (esd/get conn sch url)))
