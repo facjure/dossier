@@ -11,7 +11,6 @@
   :dependencies [[org.clojure/clojure "1.6.0"]
                  [clojurewerkz/elastisch "2.2.0-beta3"]
                  [clj-aws-s3 "0.3.10"]
-                 [me.raynes/fs "1.4.6"]
                  [environ "1.0.0"]
                  [facjure/zendown "0.3.0"]]
   :plugins [[lein-environ "1.0.0"]

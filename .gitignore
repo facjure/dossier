@@ -5,5 +5,7 @@ pom.xml.asc
 /classes/
 /target/
 /checkouts/
+.repl*
 .nrepl-*
 .lein*
+*cider*
