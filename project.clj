@@ -10,10 +10,14 @@
   :warn-on-reflection false
   :dependencies [[org.clojure/clojure "1.6.0"]
                  [clojurewerkz/elastisch "2.2.0-beta3"]
-                 [clj-aws-s3 "0.3.10"]
+                 [clj-time "0.9.0"]
+                 [clj-aws-s3 "0.3.10" :exclusions [joda-time]]
                  [environ "1.0.0"]
                  [facjure/zendown "0.3.0"]]
   :plugins [[lein-environ "1.0.0"]
             [lein-cljfmt "0.1.10"]
-            [lein-marginalia "0.8.0"]]
-  :profiles {:dev {:dependencies [[expectations "2.0.9"]]}})
+            [com.jakemccrary/lein-test-refresh "0.9.0"]]
+  :profiles {:dev {:dependencies [[pjstadig/humane-test-output "0.7.0"]]
+                   :test-refresh {:notify-command ["terminal-notifier" "-title" "Tests" "-message"]}
+                   :injections [(require 'pjstadig.humane-test-output)
+                                (pjstadig.humane-test-output/activate!)]}})
