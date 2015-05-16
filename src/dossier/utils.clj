@@ -18,10 +18,10 @@
       (str/replace #"-+" "-")
       (str/replace #"-$" "")))
 
-(defn generate-uri [{author :author title :title poem :content}]
+(defn generate-uri [{author :author title :title doc :content}]
   "Generates a document's unique uri, a suffix for the host url.
-   Expects a poem in clj ds."
-  (let [first-line (first (str/split-lines poem))
+   Expects a doc in clj data."
+  (let [first-line (first (str/split-lines doc))
         uri (cond
              (= title nil) first-line
              :else title)]

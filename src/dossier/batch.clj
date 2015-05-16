@@ -4,9 +4,9 @@
   (:require [environ.core :refer [env]]
             [clojure.string :as str]
             [clojure.java.io :as io]
-            [me.raynes.fs :refer [glob]]
             [aws.sdk.s3 :as s3]
-            [dossier.utils :refer :all])
+            [dossier.utils :refer :all]
+            [zendown.core :as zen])
   (:import  [java.io File]))
 
 (def ^:dynamic *aws*
@@ -29,9 +29,13 @@
         :encoding "UTF-8"
         :append true))
 
-(defn upload [bucket url fname]
+(defn upload [bucket doc io-type]
   "Upload content to S3"
-  (s3/put-object *aws* bucket url (fetch :url fname)))
+  (let [data (zen/readany :resource doc)
+        url (generate-uri data)
+        contents (fetch io-type doc)]
+    (s3/put-object *aws* bucket url contents)
+    url))
 
 (defn grant-read-access [bucket url]
   "Grant all users a read permission"
@@ -41,10 +45,9 @@
   "Does content exist?"
   (s3/object-exists? *aws* bucket url))
 
-(defn download [bucket url-suffix]
-  "Download content from S3 and return a string;
-   url-suffix: unique suffix added to the S3 host URL"
-  (slurp (:content (s3/get-object *aws* bucket url-suffix))))
+(defn download [bucket url]
+  "Download content from S3 and return a string"
+  (slurp (:content (s3/get-object *aws* bucket url))))
 
 (defn delete
   [bucket url fname]
