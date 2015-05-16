@@ -3,25 +3,27 @@ Dossier
 
 Dossier is a simple document management library in Clojure, built on S3 and
 Elasticsearch to store, search, and analyze plaintext-like documents on
-[Elastisch](http://clojureelasticsearch.info). Built primarily to manage
-structured content like blogs, poems, and stories.
+[Elastisch](http://clojureelasticsearch.info).
+
+Built primarily to manage structured content like blogs, poems, and prose.
 
 ## Quickstart
 
-Add the following to Leiningen or Boot dependency:
-
-Leiningen dependency information:
-
-    [facjure/dossier "0.3.1"]
-
 Environ](https://github.com/weavejester/environ) is used to manage environment
-variables for AWS, Heroku, Cassandra and other storage engines.
+variables for AWS.
 
-Add the follwing keys in `~/.lein/profiles.clj` or your PAAS/IAAS environment:
+Add the follwing keys in `~/.lein/profiles.clj`:
 
-    :aws-access-key "todo"
-    :aws-secret-key "todo"
-    :elasticsearch-url "todo"
+    :aws-access-key "key"
+    :aws-secret-key "secret"
+
+Dev: open [repl-test](test/dossier/repl_test.clj) and evaluate the current api.
+
+	lein repl
+
+Tests:
+
+	lein test-refresh
 
 ## Documentation
 
@@ -31,7 +33,7 @@ See `doc/index.md` for more details
 
 This library is still in development. Feedback and contributions are welcome.
 
-v0.2.0
+v0.3.2
 
 ## License
 

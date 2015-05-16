@@ -8,24 +8,24 @@ _Document formats supported_:
 - [Zendown](https://github.com/facjure/zendown)
 
 
-Currently, there are two apis:
-
-1. Publish
+## Indexing
 
 ```clojure
 (require '[dossier.api :refer :all]))
-(publish :resource "samples/Hemingway-The-old-man-and-the-bridge.md")
->> http://yourdomain.com/zaswqr7
+
+(def conn (doc/connect "http://127.0.0.1:9200"))
+(def sample "samples/Hemingway-The-old-man-and-the-bridge.txt")
+
+(index-document conn index :documents sample :resource)
 ```
 
-This will upload a document to S3, index content and its metadata in ES, and generate a short url. Publish can take :file :url :str or any :resource from classpath.
+## Search
 
-2. Search
-
-Search currently uses ‘fuzzy’ search, exact match, and others options.
+Search currently uses ‘fuzzy’ search, exact match, and others future options.
 
 ```clojure
 (require '[dossier.api :refer :all]))
+
 (search :title "The-old-man-and-the-bridge" 0 :match)
 (search :content "bridge with soldiers" 5 :google)
 ```
