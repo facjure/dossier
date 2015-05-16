@@ -9,7 +9,7 @@ Built primarily to manage structured content like blogs, poems, and prose.
 
 ## Quickstart
 
-Environ](https://github.com/weavejester/environ) is used to manage environment
+[Environ](https://github.com/weavejester/environ) is used to manage environment
 variables for AWS.
 
 Add the follwing keys in `~/.lein/profiles.clj`:
@@ -27,13 +27,13 @@ Tests:
 
 ## Documentation
 
-See `doc/index.md` for more details
+See [doc](doc/index.md) for more details.
 
 ## Status & Roadmap
 
 This library is still in development. Feedback and contributions are welcome.
 
-v0.3.2
+[![Clojars Project](http://clojars.org/facjure/dossier/latest-version.svg)](http://clojars.org/facjure/dossier)
 
 ## License
 
