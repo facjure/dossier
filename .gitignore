@@ -8,4 +8,6 @@ pom.xml.asc
 .repl*
 .nrepl-*
 .lein*
+.idea*
+*.iml*
 *cider*
