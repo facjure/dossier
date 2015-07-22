@@ -1,4 +1,6 @@
 ---
-machine:
-  services:
-    - elasticsearch
+dependencies:
+  post:
+    - wget https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-1.7.0.tar.gz
+    - tar -xvf elasticsearch-1.7.0.tar.gz
+    - elasticsearch-1.7.0/bin/elasticsearch: {background: true}
