@@ -9,13 +9,15 @@
 (def sample "samples/Hemingway-The-old-man-and-the-bridge.txt")
 
 (defn hello-es [conn indx]
-  (let [mapping-types {:person {:properties {:username   {:type "string" :store "yes"}
-                                             :first-name {:type "string" :store "yes"}
-                                             :last-name  {:type "string"}
-                                             :age        {:type "integer"}
-                                             :title      {:type "string" :analyzer "snowball"}
-                                             :planet     {:type "string"}
-                                             :biography  {:type "string" :analyzer "snowball" :term_vector "with_positions_offsets"}}}}]
+  (let [mapping-types {:person
+                       {:properties
+                        {:username   {:type "string" :store "yes"}
+                         :first-name {:type "string" :store "yes"}
+                         :last-name  {:type "string"}
+                         :age        {:type "integer"}
+                         :title      {:type "string" :analyzer "snowball"}
+                         :planet     {:type "string"}
+                         :biography  {:type "string" :analyzer "snowball" :term_vector "with_positions_offsets"}}}}]
     (esi/create conn indx :mappings mapping-types)))
 
 (comment
