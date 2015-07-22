@@ -3,7 +3,6 @@
             [clojure.string :as str])
   (:import  [java.io File]))
 
-
 (defmacro dbg [body]
   "Cheap inline debugging"
   `(let [x# ~body]
@@ -56,3 +55,4 @@
     (int-to-base62
      (java.math.BigInteger. (str/replace (str (java.util.UUID/randomUUID)) "-" "") 16))
     0 8))
+

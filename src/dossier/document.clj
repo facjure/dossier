@@ -1,6 +1,5 @@
 (ns dossier.document
-  (:require [environ.core :refer [env]]
-            [clojurewerkz.elastisch.rest :as esr]
+  (:require [clojurewerkz.elastisch.rest :as esr]
             [clojurewerkz.elastisch.rest.index :as esi]
             [clojurewerkz.elastisch.rest.document :as esd]
             [clojurewerkz.elastisch.rest.response :as esrsp]
@@ -96,7 +95,3 @@
                :else :not-running)]
     resp))
 
-(defn find-by-url [conn indx sch url]
-  "Return content by document url"
-  (:_source
-   (esd/get conn sch url)))
