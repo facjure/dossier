@@ -9,6 +9,7 @@
   :jvm-opts ["-Xms768m" "-Xmx768m"]
   :warn-on-reflection false
   :dependencies [[org.clojure/clojure "1.6.0"]
+                 [org.clojure/tools.logging "0.3.1"]
                  [clojurewerkz/elastisch "2.2.0-beta3"]
                  [clj-time "0.9.0"]
                  [clj-aws-s3 "0.3.10" :exclusions [joda-time]]
